@@ -1,0 +1,16 @@
+version: "3"
+services:
+  php:
+    container_name: php-jsonschema-generator
+    image: keltuo/php8-cli
+    build:
+      context: .
+    volumes:
+      - ./:/var/www/
+    command: bash -c "php /var/www/vendor/phpunit/phpunit/phpunit --configuration /var/www/phpunit.xml  --migrate-configuration"
+  composer:
+    container_name: composer-jsonschema-generator
+    image: composer
+    volumes:
+      - ./:/app
+    command: bash -c "composer install --optimize-autoloader --prefer-dist --no-progress"

@@ -1,0 +1,32 @@
+{
+    "name": "keltuo/jsonschema-php-generator",
+    "description": "Generate Json schema from php classes. (From class Schema, Definitions)",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lukas Paiskr",
+            "email": "lukas@pasysdev.cz"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "JsonSchemaPhpGenerator\\": "src"
+        }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "JsonSchemaPhpGenerator\\Tests\\": "tests/"
+      }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8.0",
+        "justinrainbow/json-schema": "^5.2",
+        "ext-json": "*"
+    },
+    "require-dev": {
+      "phpstan/phpstan": "^0.12.49",
+      "phpunit/phpunit": "^9.5"
+    }
+}
