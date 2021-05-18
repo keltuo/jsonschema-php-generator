@@ -196,7 +196,7 @@ class AbstractSchemaTest extends TestCase
                 'property' => 'schema',
                 'pointer' => 'internal_error',
                 'message' => 'Syntax error',
-                'constraint' => '/var/www/src/AbstractSchema.php',
+                'constraint' => 'AbstractSchema.php',
                 'context' => 94
             ]
         ], $errors);

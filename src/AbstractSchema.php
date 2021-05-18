@@ -64,7 +64,7 @@ abstract class AbstractSchema implements GeneratorInterface
         } catch (JsonException $exception) {
             $errors[] = [
                 'message' => $exception->getMessage(),
-                'constraint' => $exception->getFile(),
+                'constraint' => basename($exception->getFile()),
                 'context' => $exception->getLine(),
                 'pointer' => 'internal_error',
                 'property' => 'schema',
