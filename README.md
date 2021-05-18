@@ -10,3 +10,4 @@ See folder Examples of using [src/Examples]
 
 ###Example schema
 - see Example schema [src/Schema/Example.php]
+
