@@ -22,7 +22,7 @@ trait CreateableTrait
      */
     public function findDefinition(string $definitionClassString = '', ?object &$object = null): string
     {
-        $object = $this->createClassFromString($definitionClassString);
+        $object = is_null($object) ? $this->createClassFromString($definitionClassString) : $object;
         if (
             is_a($object, AbstractDefinition::class)
             && method_exists($this, 'addDefinitions')
