@@ -23,7 +23,7 @@ class ErrorModel implements Arrayable, JsonSerializable, Stringable
     public function __construct(array $data = [])
     {
         if (count($data) > 0) {
-            foreach ($this->toArray() as $key => $value) {
+            foreach (self::toArray() as $key => $value) {
                 if(array_key_exists($key, $data)) {
                     $this->{$key} = $data[$key];
                 }
