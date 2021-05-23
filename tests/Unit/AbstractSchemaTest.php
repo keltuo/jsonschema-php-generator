@@ -3,6 +3,7 @@
 namespace JsonSchemaPhpGenerator\Tests\Unit;
 
 use JsonSchemaPhpGenerator\Definition\Example as ExampleDefinition;
+use JsonSchemaPhpGenerator\Definition\ExampleMergeOldNewDefinitionProperties;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -37,12 +38,21 @@ class AbstractSchemaTest extends TestCase
                     "date-of-birth":{
                        "type":"string",
                        "format":"date"
+                    },
+                    "note": {
+                        "$ref": "#/definitions/NotEmptyString"
                     }
                  },
                  "required":[
                     "username",
                     "password"
                  ]
+              },
+              "NotEmptyString": {
+                "type": "string",
+                "title": "NotEmptyString",
+                "minLength": 1,
+                "additionalProperties": false
               }
            }
         }
@@ -200,6 +210,53 @@ class AbstractSchemaTest extends TestCase
                 'context' => 94
             ]
         ], $errors);
+    }
+
+    public function testCanMergeOldAndNewPropertyDefinitions()
+    {
+        $schema = $this->getMockForAbstractClass(
+            '\JsonSchemaPhpGenerator\AbstractSchema',
+        );
+        $schema->createSchemaFromDefinition(ExampleMergeOldNewDefinitionProperties::class);
+        $this->assertEquals(json_decode('
+        {
+           "$schema":"http://json-schema.org/draft-07/schema#",
+           "$ref":"#/definitions/ExampleMergeOldNewDefinitionProperties",
+           "title":"",
+           "definitions":{
+              "ExampleMergeOldNewDefinitionProperties":{
+                 "type":"object",
+                 "title":"ExampleMergeOldNewDefinitionProperties",
+                 "additionalProperties":false,
+                 "properties":{
+                    "username":{
+                       "type":"string"
+                    },
+                    "password":{
+                       "type":"string"
+                    },
+                    "date-of-birth":{
+                       "type":"string",
+                       "format":"date"
+                    },
+                    "note": {
+                        "$ref": "#/definitions/NotEmptyString"
+                    }
+                 },
+                 "required":[
+                    "username",
+                    "password"
+                 ]
+              },
+              "NotEmptyString": {
+                "type": "string",
+                "title": "NotEmptyString",
+                "minLength": 1,
+                "additionalProperties": false
+              }
+           }
+        }
+        '), $schema->decode());
     }
 
 }

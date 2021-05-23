@@ -7,10 +7,10 @@ use \JsonSchemaPhpGenerator\AbstractDefinition;
 use JsonSchemaPhpGenerator\Model\Property\Format\Date;
 
 /**
- * Class Example
+ * Class ExampleMergeOldNewDefinitionProperties
  * @package JsonSchemaPhpGenerator\Definition
  */
-class Example extends AbstractDefinition
+class ExampleMergeOldNewDefinitionProperties extends AbstractDefinition
 {
     const TYPE = self::TYPE_OBJECT;
     /** @var bool */
@@ -20,23 +20,14 @@ class Example extends AbstractDefinition
     {
         // Example1: new definition properties
         $this->getPropertyBag()
-            ->addString('username')
             ->addString('password')
-            ->addString('date-of-birth', '', new Date())
-            ->addReference('note', $this->findDefinitionAsRef(NotEmptyString::class));
+            ->addString('date-of-birth', '', new Date());
 
         // Example2: old definition properties
         $this->properties = '
         {
             "username": {
                 "type": "string"
-            },
-            "password": {
-                "type": "string"
-            },
-            "date-of-birth": {
-                "type": "string",
-                "format": "date"
             },
             "note": {
                 "$ref": "'.$this->findDefinitionAsRef(NotEmptyString::class).'"

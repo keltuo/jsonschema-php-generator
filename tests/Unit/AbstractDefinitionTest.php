@@ -3,6 +3,7 @@
 namespace JsonSchemaPhpGenerator\Tests\Unit;
 
 use JsonSchemaPhpGenerator\Definition\ExampleEnumValues as ExampleEnumValuesDefinition;
+use JsonSchemaPhpGenerator\Definition\ExampleMergeOldNewDefinitionProperties;
 use PHPUnit\Framework\TestCase;
 
 /**
