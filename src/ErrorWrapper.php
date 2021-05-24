@@ -4,14 +4,16 @@ declare(strict_types=1);
 namespace JsonSchemaPhpGenerator;
 
 use ArrayAccess;
+use Countable;
 use Iterator;
+use JetBrains\PhpStorm\Pure;
 use ReflectionClass;
 
 /**
  * Class ErrorWrapper
  * @package JsonSchemaPhpGenerator
  */
-class ErrorWrapper implements ErrorWrapperInterface, Arrayable, ArrayAccess, Iterator
+class ErrorWrapper implements ErrorWrapperInterface, Arrayable, ArrayAccess, Iterator, Countable
 {
     protected string $errorModel = ErrorModel::class;
     /** @var array|ErrorModel[] */
@@ -106,5 +108,11 @@ class ErrorWrapper implements ErrorWrapperInterface, Arrayable, ArrayAccess, Ite
     public function rewind(): void
     {
         $this->position = 0;
+    }
+
+    #[Pure]
+    public function count(): int
+    {
+        return count($this->getErrors());
     }
 }

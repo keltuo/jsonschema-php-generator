@@ -16,7 +16,7 @@ use function json_decode;
  */
 abstract class AbstractSchema implements GeneratorInterface
 {
-    use CreateableTrait;
+    use CreateableDefinitionTrait;
 
     /** @var ErrorWrapperInterface  */
     protected ErrorWrapperInterface $errorWrapper;

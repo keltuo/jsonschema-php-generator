@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace JsonSchemaPhpGenerator;
 
+use JetBrains\PhpStorm\Pure;
+use JsonSchemaPhpGenerator\Model\PropertyBag;
 use ReflectionClass;
 use function implode;
 
@@ -12,9 +14,11 @@ use function implode;
  */
 abstract class AbstractDefinition implements GeneratorInterface
 {
-    use CreateableTrait;
+    use CreateableDefinitionTrait;
 
     const TYPE = self::TYPE_OBJECT;
+    /** @var PropertyBag|null */
+    protected ?PropertyBag $propertyBag = null;
     /** @var bool */
     protected bool $additionalProperties = false;
     /** @var string */
@@ -48,6 +52,15 @@ abstract class AbstractDefinition implements GeneratorInterface
     public function __construct()
     {
         $this->loadDefinition();
+    }
+
+    #[Pure]
+    public function getPropertyBag(): PropertyBag
+    {
+        if(is_null($this->propertyBag)) {
+            $this->propertyBag = new PropertyBag();
+        }
+        return $this->propertyBag;
     }
 
     protected function loadProperties(): void
@@ -177,6 +190,15 @@ abstract class AbstractDefinition implements GeneratorInterface
         }
         if ($additionalProperties) {
             $definition[] = '"additionalProperties": ' . $this->hasAdditionalProperties() . '';
+        }
+        if (!$this->getPropertyBag()->isEmpty()) {
+            $properties = [];
+            if (!empty($this->properties)) {
+                $properties = json_decode($this->properties, true);
+            }
+            $this->properties = (string)json_encode(
+                array_merge($properties, $this->getPropertyBag()->toArray())
+            );
         }
         if (!empty($this->properties)) {
             $definition[] = '"properties": ' . $this->properties . '';

@@ -8,10 +8,10 @@ use ReflectionException;
 use RuntimeException;
 
 /**
- * Class CreateableTrait
+ * Class CreateableDefinitionTrait
  * @package JsonSchemaPhpGenerator
  */
-trait CreateableTrait
+trait CreateableDefinitionTrait
 {
 
     /**
@@ -33,11 +33,21 @@ trait CreateableTrait
         return (new ReflectionClass($object))->getShortName();
     }
 
+    public function findDefinitionAsRef(string $definitionClassString = '', ?object &$object = null): string
+    {
+        return $this->getDefinitionRefTag($this->findDefinition($definitionClassString, $object));
+    }
+
+    public function getDefinitionRefTag(string $definition): string
+    {
+        return '#/definitions/'.$definition;
+    }
+
     /**
      * @param string $classString
      * @param array $args
      * @return object
-     * @throws ReflectionException
+     * @throws ReflectionException|RuntimeException
      */
     protected function createClassFromString(string $classString = '', array $args = []): object
     {
