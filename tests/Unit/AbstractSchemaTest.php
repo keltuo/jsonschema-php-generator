@@ -148,6 +148,28 @@ class AbstractSchemaTest extends TestCase
             'context' => 1
             ]
         ], $errors);
+
+        $this->assertFalse($schema->validate(json_decode(
+        '{
+                "password": "1234"
+            }'
+        ), $errors));
+        $this->assertSame([
+            0 => [
+                'property' => 'password',
+                'pointer' => '/password',
+                'message' => 'The property password is required',
+                'constraint' => 'required',
+                'context' => 1
+            ],
+            2 => [
+                'property' => 'username',
+                'pointer' => '/username',
+                'message' => 'The property username is required',
+                'constraint' => 'required',
+                'context' => 1
+            ]
+        ], $errors);
     }
 
     public function testCanNotValidateSchema()
@@ -207,7 +229,7 @@ class AbstractSchemaTest extends TestCase
                 'pointer' => 'internal_error',
                 'message' => 'Syntax error',
                 'constraint' => 'AbstractSchema.php',
-                'context' => 94
+                'context' => 97
             ]
         ], $errors);
     }

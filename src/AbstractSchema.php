@@ -60,9 +60,9 @@ abstract class AbstractSchema implements GeneratorInterface
         $validator = new Validator();
         try {
             $validator->validate($data, $this->decode());
-            $errors = $validator->getErrors();
+            $validateErrors = $validator->getErrors();
         } catch (JsonException $exception) {
-            $errors[] = [
+            $validateErrors[] = [
                 'message' => $exception->getMessage(),
                 'constraint' => basename($exception->getFile()),
                 'context' => $exception->getLine(),
@@ -70,7 +70,10 @@ abstract class AbstractSchema implements GeneratorInterface
                 'property' => 'schema',
             ];
         }
-        $errors = $this->errorWrapper->setErrors($errors)->toArray();
+        $errors = array_unique(array_merge(
+            $errors,
+            $this->errorWrapper->setErrors($validateErrors)->toArray()
+        ),SORT_REGULAR);
 
         return $validator->isValid();
     }
