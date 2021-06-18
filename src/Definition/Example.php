@@ -23,7 +23,9 @@ class Example extends AbstractDefinition
             ->addString('username')
             ->addString('password')
             ->addString('date-of-birth', '', new Date())
-            ->addReference('note', $this->findDefinitionAsRef(NotEmptyString::class));
+            ->addReference('note', $this->findDefinitionAsRef(NotEmptyString::class))
+            ->addConst('state', 'United states')
+            ->addConst('newsletter', true);
 
         // Example2: old definition properties
         $this->properties = '
@@ -40,6 +42,12 @@ class Example extends AbstractDefinition
             },
             "note": {
                 "$ref": "'.$this->findDefinitionAsRef(NotEmptyString::class).'"
+            },
+            "state": {
+                "const": "United states"
+            },
+            "newsletter": {
+                "const": true
             }
         }
         ';

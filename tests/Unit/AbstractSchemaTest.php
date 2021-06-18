@@ -41,6 +41,12 @@ class AbstractSchemaTest extends TestCase
                     },
                     "note": {
                         "$ref": "#/definitions/NotEmptyString"
+                    },
+                    "state": {
+                        "const": "United states"
+                    },
+                    "newsletter": {
+                        "const": true
                     }
                  },
                  "required":[
@@ -114,6 +120,12 @@ class AbstractSchemaTest extends TestCase
                         "date-of-birth":{
                             "type":"string",
                            "format":"date"
+                        },
+                        "state": {
+                            "const": "United states"
+                        },
+                        "newsletter": {
+                            "const": true
                         }
                      },
                      "required":[
@@ -144,7 +156,12 @@ class AbstractSchemaTest extends TestCase
             'property' => 'password',
             'pointer' => '/password',
             'message' => 'The property password is required',
-            'constraint' => 'required',
+            'constraint' => [
+                'name' => 'required',
+                'params' => [
+                    'property' => 'password'
+                ]
+            ],
             'context' => 1
             ]
         ], $errors);
@@ -159,17 +176,74 @@ class AbstractSchemaTest extends TestCase
                 'property' => 'password',
                 'pointer' => '/password',
                 'message' => 'The property password is required',
-                'constraint' => 'required',
+                'constraint' => [
+                    'name' => 'required',
+                    'params' => [
+                        'property' => 'password'
+                    ]
+                ],
                 'context' => 1
             ],
             2 => [
                 'property' => 'username',
                 'pointer' => '/username',
                 'message' => 'The property username is required',
-                'constraint' => 'required',
+                'constraint' => [
+                    'name' => 'required',
+                    'params' => [
+                        'property' => 'username'
+                    ]
+                ],
                 'context' => 1
             ]
         ], $errors);
+
+        $this->assertFalse($schema->validate(json_decode(
+            '{
+                "username": "Lukas",
+                "password": "1234",
+                "newsletter": false
+            }'
+        ), $errors));
+        $this->assertSame([
+            0 => [
+                'property' => 'password',
+                'pointer' => '/password',
+                'message' => 'The property password is required',
+                'constraint' => [
+                    'name' => 'required',
+                    'params' => [
+                        'property' => 'password'
+                    ]
+                ],
+                'context' => 1
+            ],
+            1 => [
+                'property' => 'username',
+                'pointer' => '/username',
+                'message' => 'The property username is required',
+                'constraint' => [
+                    'name' => 'required',
+                    'params' => [
+                        'property' => 'username'
+                    ]
+                ],
+                'context' => 1
+            ],
+            4 => [
+                'property' => 'newsletter',
+                'pointer' => '/newsletter',
+                'message' => 'Does not have a value equal to true',
+                'constraint' => [
+                    'name' => 'const',
+                    'params' => [
+                        'const' => true
+                    ]
+                ],
+                'context' => 1
+            ],
+
+        ],$errors);
     }
 
     public function testCanNotValidateSchema()
@@ -228,8 +302,13 @@ class AbstractSchemaTest extends TestCase
                 'property' => 'schema',
                 'pointer' => 'internal_error',
                 'message' => 'Syntax error',
-                'constraint' => 'AbstractSchema.php',
-                'context' => 97
+                'constraint' =>  [
+                    'name' => 'internal_error',
+                    'params' => [
+                        'property' => 'AbstractSchema.php'
+                    ]
+                ],
+                'context' => 102
             ]
         ], $errors);
     }
