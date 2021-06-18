@@ -13,7 +13,7 @@ class ErrorModel implements Arrayable, JsonSerializable, Stringable
     public string $property = '';
     public string $pointer = '';
     public string $message = '';
-    public string $constraint = '';
+    public array $constraint = [];
     public int $context = 0;
 
     /**
@@ -38,7 +38,7 @@ class ErrorModel implements Arrayable, JsonSerializable, Stringable
         'property' => "string",
         'pointer' => "string",
         'message' => "string",
-        'constraint' => "string",
+        'constraint' => "array",
         'context' => "int"
     ])]
     public function toArray(): array
@@ -61,7 +61,7 @@ class ErrorModel implements Arrayable, JsonSerializable, Stringable
         'property' => "string",
         'pointer' => "string",
         'message' => "string",
-        'constraint' => "string",
+        'constraint' => "array",
         'context' => "int"
     ])]
     public function jsonSerialize(): array

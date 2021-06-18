@@ -19,14 +19,24 @@ class ErrorWrapperTest extends TestCase
                 'property' => "string1",
                 'pointer' => "string1",
                 'message' => "string1",
-                'constraint' => "string1",
+                'constraint' => [
+                    'name' => 'required',
+                    'params' => [
+                        'property' => 'string1'
+                    ]
+                ],
                 'context' => 1
             ],
             [
                 'property' => "string2",
                 'pointer' => "string2",
                 'message' => "string2",
-                'constraint' => "string2",
+                'constraint' => [
+                    'name' => 'required',
+                    'params' => [
+                        'property' => 'string2'
+                    ]
+                ],
                 'context' => 2
             ]
         ]);
@@ -38,7 +48,12 @@ class ErrorWrapperTest extends TestCase
                 'property' => "string2",
                 'pointer' => "string2",
                 'message' => "string2",
-                'constraint' => "string2",
+                'constraint' => [
+                    'name' => 'required',
+                    'params' => [
+                        'property' => 'string2'
+                    ]
+                ],
                 'context' => 2
             ])
         );

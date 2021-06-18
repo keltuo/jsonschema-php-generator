@@ -7,6 +7,7 @@ namespace JsonSchemaPhpGenerator\Model;
 use JsonSchemaPhpGenerator\Model\Property\AbstractProperty;
 use JsonSchemaPhpGenerator\Model\Property\ArrayProperty;
 use JsonSchemaPhpGenerator\Model\Property\BooleanProperty;
+use JsonSchemaPhpGenerator\Model\Property\ConstProperty;
 use JsonSchemaPhpGenerator\Model\Property\EnumProperty;
 use JsonSchemaPhpGenerator\Model\Property\Format\AbstractFormat;
 use JsonSchemaPhpGenerator\Model\Property\IntegerProperty;
@@ -139,8 +140,19 @@ class PropertyBag extends AbstractBag
 
     public function addMultipleType(string $name, PropertyBag $propertyBag, string $description = ''): PropertyBag
     {
-        $item = new MultipleTypeProperty( $name, $description = '');
+        $item = new MultipleTypeProperty( $name, $description);
         $item->setPropertyBag($propertyBag);
+        $this->add($item);
+        return $this;
+    }
+
+    public function addConst(
+        string $name,
+        string|bool $value,
+        string $description = ''
+    ): PropertyBag
+    {
+        $item = new ConstProperty($name, $value, $description);
         $this->add($item);
         return $this;
     }
