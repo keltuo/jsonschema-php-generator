@@ -21,7 +21,7 @@ class ConditionsBag extends AbstractBag
 
     protected function insertEntry(ModelInterface $entry): bool
     {
-        return false;
+        throw new \BadMethodCallException('Method not allowed for ConditionsBag');
     }
 
     public function toArray(): array

@@ -5,6 +5,7 @@ namespace JsonSchemaPhpGenerator;
 
 use JetBrains\PhpStorm\Pure;
 use JsonSchemaPhpGenerator\Model\ConditionsBag;
+use JsonSchemaPhpGenerator\Model\DependenciesBag;
 use JsonSchemaPhpGenerator\Model\PropertyBag;
 use ReflectionClass;
 use function implode;
@@ -32,8 +33,8 @@ abstract class AbstractDefinition implements GeneratorInterface
     protected string $enum;
     /** @var string[] */
     protected array $additionalDefinitions = [];
-    /** @var string[] */
-    protected array $dependencies = [];
+    /** @var DependenciesBag|null */
+    protected ?DependenciesBag $dependencies = null;
     /** @var ConditionsBag|null */
     protected ?ConditionsBag $oneOf = null;
     /** @var ConditionsBag|null */
@@ -55,13 +56,20 @@ abstract class AbstractDefinition implements GeneratorInterface
         $this->loadDefinition();
     }
 
-    #[Pure]
     public function getPropertyBag(): PropertyBag
     {
         if(is_null($this->propertyBag)) {
             $this->propertyBag = new PropertyBag();
         }
         return $this->propertyBag;
+    }
+
+    public function getDependenciesBag(): DependenciesBag
+    {
+        if(is_null($this->dependencies)) {
+            $this->dependencies = new DependenciesBag();
+        }
+        return $this->dependencies;
     }
 
     public function getOneOfBag(): ConditionsBag
@@ -72,7 +80,7 @@ abstract class AbstractDefinition implements GeneratorInterface
         return $this->oneOf;
     }
 
-    public function getAnyOffBag(): ConditionsBag
+    public function getAnyOfBag(): ConditionsBag
     {
         if(is_null($this->anyOf)) {
             $this->anyOf = new ConditionsBag();
@@ -178,16 +186,6 @@ abstract class AbstractDefinition implements GeneratorInterface
     }
 
     /**
-     * @param string $dependency
-     */
-    protected function addDependency(string $dependency): void
-    {
-        if (is_string($dependency) && !empty($dependency)) {
-            $this->dependencies[] = $dependency;
-        }
-    }
-
-    /**
      * @return string
      */
     public function getClassName(): string
@@ -234,14 +232,14 @@ abstract class AbstractDefinition implements GeneratorInterface
         if (!empty($this->enum)) {
             $definition[] = '"enum": ' . $this->enum . '';
         }
-        if (count($this->dependencies) > 0) {
-            $definition[] = '"dependencies": ' . json_encode($this->dependencies) . '';
+        if (!$this->getDependenciesBag()->isEmpty()) {
+            $definition[] = '"dependencies": ' . (string)json_encode($this->getDependenciesBag()->toArray()) . '';
         }
         if (!$this->getOneOfBag()->isEmpty()) {
             $definition[] = '"oneOf": ' . (string)json_encode($this->getOneOfBag()->toArray()) . '';
         }
-        if (!$this->getAnyOffBag()->isEmpty()) {
-            $definition[] = '"anyOf": ' . (string)json_encode($this->getAnyOffBag()->toArray()) . '';
+        if (!$this->getAnyOfBag()->isEmpty()) {
+            $definition[] = '"anyOf": ' . (string)json_encode($this->getAnyOfBag()->toArray()) . '';
         }
         if (!$this->getAllOfBag()->isEmpty()) {
             $definition[] = '"allOf": ' . (string)json_encode($this->getAllOfBag()->toArray()) . '';

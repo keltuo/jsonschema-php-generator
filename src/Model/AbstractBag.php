@@ -27,7 +27,7 @@ abstract class AbstractBag implements \JsonSerializable, \Stringable
     protected function insertEntry(ModelInterface $entry): bool
     {
         // Allow only unique values
-        if (isset($this->idMap[$entry->getIdentifier()])) {
+        if ($this->checkEntry($entry->getIdentifier())) {
             return false;
         }
 
@@ -35,6 +35,15 @@ abstract class AbstractBag implements \JsonSerializable, \Stringable
         $this->idMap[$entry->getIdentifier()] = $entry;
 
         return true;
+    }
+
+    protected function checkEntry(string $property): bool
+    {
+        // Allow only unique values
+        if (isset($this->idMap[$property])) {
+            return true;
+        }
+        return false;
     }
 
     public function isEmpty(): bool
