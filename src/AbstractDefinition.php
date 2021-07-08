@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace JsonSchemaPhpGenerator;
 
 use JetBrains\PhpStorm\Pure;
+use JsonSchemaPhpGenerator\Model\ConditionsBag;
 use JsonSchemaPhpGenerator\Model\PropertyBag;
 use ReflectionClass;
 use function implode;
@@ -33,12 +34,12 @@ abstract class AbstractDefinition implements GeneratorInterface
     protected array $additionalDefinitions = [];
     /** @var string[] */
     protected array $dependencies = [];
-    /** @var string */
-    protected string $oneOf;
-    /** @var string  */
-    protected string $anyOf;
-    /** @var string  */
-    protected string $allOf;
+    /** @var ConditionsBag|null */
+    protected ?ConditionsBag $oneOf = null;
+    /** @var ConditionsBag|null */
+    protected ?ConditionsBag $anyOf = null;
+    /** @var ConditionsBag|null */
+    protected ?ConditionsBag $allOf = null;
     /** @var int|null  */
     protected ?int $minLength = null;
     /** @var int|null  */
@@ -61,6 +62,30 @@ abstract class AbstractDefinition implements GeneratorInterface
             $this->propertyBag = new PropertyBag();
         }
         return $this->propertyBag;
+    }
+
+    public function getOneOfBag(): ConditionsBag
+    {
+        if(is_null($this->oneOf)) {
+            $this->oneOf = new ConditionsBag();
+        }
+        return $this->oneOf;
+    }
+
+    public function getAnyOffBag(): ConditionsBag
+    {
+        if(is_null($this->anyOf)) {
+            $this->anyOf = new ConditionsBag();
+        }
+        return $this->anyOf;
+    }
+
+    public function getAllOfBag(): ConditionsBag
+    {
+        if(is_null($this->allOf)) {
+            $this->allOf = new ConditionsBag();
+        }
+        return $this->allOf;
     }
 
     protected function loadProperties(): void
@@ -210,16 +235,16 @@ abstract class AbstractDefinition implements GeneratorInterface
             $definition[] = '"enum": ' . $this->enum . '';
         }
         if (count($this->dependencies) > 0) {
-            $definition[] = '"dependency": ' . json_encode($this->dependencies) . '';
+            $definition[] = '"dependencies": ' . json_encode($this->dependencies) . '';
         }
-        if (!empty($this->oneOf)) {
-            $definition[] = '"oneOf": ' . $this->oneOf . '';
+        if (!$this->getOneOfBag()->isEmpty()) {
+            $definition[] = '"oneOf": ' . (string)json_encode($this->getOneOfBag()->toArray()) . '';
         }
-        if (!empty($this->anyOf)) {
-            $definition[] = '"anyOf": ' . $this->anyOf . '';
+        if (!$this->getAnyOffBag()->isEmpty()) {
+            $definition[] = '"anyOf": ' . (string)json_encode($this->getAnyOffBag()->toArray()) . '';
         }
-        if (!empty($this->allOf)) {
-            $definition[] = '"allOf": ' . $this->allOf . '';
+        if (!$this->getAllOfBag()->isEmpty()) {
+            $definition[] = '"allOf": ' . (string)json_encode($this->getAllOfBag()->toArray()) . '';
         }
 
         return $definition;
