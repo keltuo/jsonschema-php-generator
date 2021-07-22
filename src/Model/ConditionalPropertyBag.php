@@ -151,7 +151,7 @@ class ConditionalPropertyBag extends PropertyBag
 
     public function addConst(
         string $name,
-        string|bool $value,
+        string|bool|int|float $value,
         string $description = '',
         bool $required = false
     ): ConditionalPropertyBag
@@ -179,7 +179,7 @@ class ConditionalPropertyBag extends PropertyBag
             $output["properties"][$item->getName()] = $item->toArray();
         }
         if (count($this->required) > 0) {
-            $output['required'] = $this->required;
+            $output['required'] = array_values(array_unique($this->required));
         }
         return $output;
     }
