@@ -5,7 +5,10 @@ namespace JsonSchemaPhpGenerator\Model;
 
 
 use JsonSchemaPhpGenerator\Model\Property\AbstractProperty;
+use JsonSchemaPhpGenerator\Model\Property\AllOfProperty;
+use JsonSchemaPhpGenerator\Model\Property\AnyOfProperty;
 use JsonSchemaPhpGenerator\Model\Property\ArrayProperty;
+use JsonSchemaPhpGenerator\Model\Property\ArrayReferenceProperty;
 use JsonSchemaPhpGenerator\Model\Property\BooleanProperty;
 use JsonSchemaPhpGenerator\Model\Property\ConstProperty;
 use JsonSchemaPhpGenerator\Model\Property\EnumProperty;
@@ -16,6 +19,7 @@ use JsonSchemaPhpGenerator\Model\Property\LengthItems;
 use JsonSchemaPhpGenerator\Model\Property\MultipleTypeProperty;
 use JsonSchemaPhpGenerator\Model\Property\NullProperty;
 use JsonSchemaPhpGenerator\Model\Property\NumberProperty;
+use JsonSchemaPhpGenerator\Model\Property\OneOfProperty;
 use JsonSchemaPhpGenerator\Model\Property\Range;
 use JsonSchemaPhpGenerator\Model\Property\ReferenceProperty;
 use JsonSchemaPhpGenerator\Model\Property\StringProperty;
@@ -52,10 +56,11 @@ class PropertyBag extends AbstractBag
         string $name,
         string $description = '',
         ?Range $range = null,
-        ?int $multipleOf = null
+        ?int $multipleOf = null,
+        ?string $pattern = null
     ): PropertyBag
     {
-        $item = new NumberProperty($name, $description, $range, $multipleOf);
+        $item = new NumberProperty($name, $description, $range, $multipleOf, $pattern);
         $this->add($item);
         return $this;
     }
@@ -64,10 +69,11 @@ class PropertyBag extends AbstractBag
         string $name,
         string $description = '',
         ?Range $range = null,
-        ?int $multipleOf = null
+        ?int $multipleOf = null,
+        ?string $pattern = null
     ): PropertyBag
     {
-        $item = new IntegerProperty($name, $description, $range, $multipleOf);
+        $item = new IntegerProperty($name, $description, $range, $multipleOf, $pattern);
         $this->add($item);
         return $this;
     }
@@ -126,6 +132,17 @@ class PropertyBag extends AbstractBag
         return $this;
     }
 
+    public function addArrayReference(
+        string $name,
+        string $identifier,
+        string $description = '',
+    ): PropertyBag
+    {
+        $item = new ArrayReferenceProperty($name, $description, $identifier);
+        $this->add($item);
+        return $this;
+    }
+
     public function addEnum(
         string $name,
         array $items,
@@ -153,6 +170,39 @@ class PropertyBag extends AbstractBag
     ): PropertyBag
     {
         $item = new ConstProperty($name, $value, $description);
+        $this->add($item);
+        return $this;
+    }
+
+    public function addAnyOf(
+        string $name,
+        PropertyBag $propertyBag,
+        string $description = ''
+    ): PropertyBag
+    {
+        $item = new AnyOfProperty($name, $propertyBag, $description);
+        $this->add($item);
+        return $this;
+    }
+
+    public function addOneOf(
+        string $name,
+        PropertyBag $propertyBag,
+        string $description = ''
+    ): PropertyBag
+    {
+        $item = new OneOfProperty($name, $propertyBag, $description);
+        $this->add($item);
+        return $this;
+    }
+
+    public function addAllOf(
+        string $name,
+        PropertyBag $propertyBag,
+        string $description = ''
+    ): PropertyBag
+    {
+        $item = new AllOfProperty($name,  $propertyBag, $description);
         $this->add($item);
         return $this;
     }

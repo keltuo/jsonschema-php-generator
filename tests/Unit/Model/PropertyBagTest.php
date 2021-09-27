@@ -62,7 +62,22 @@ class PropertyBagTest extends TestCase
                     ->add(new IntegerProperty())
             )
             ->addConst('test-const', 'string')
-            ->addConst('test-const-bool', true);
+            ->addConst('test-const-bool', true)
+            ->addAnyOf('test-anyOf',
+                (new PropertyBag())
+                ->add(new NumberProperty())
+                ->add(new IntegerProperty())
+            )
+            ->addOneOf('test-oneOf',
+                (new PropertyBag())
+                ->add(new NumberProperty())
+                ->add(new IntegerProperty())
+            )
+            ->addAllOf('test-allOf',
+                (new PropertyBag())
+                ->add(new NumberProperty())
+                ->add(new IntegerProperty())
+            );
         $expectedPropertyArray = [
             'test-string' => [
                 'type' => 'string',
@@ -124,15 +139,33 @@ class PropertyBagTest extends TestCase
             'test-const-bool' => [
                 'const' => true,
             ],
+            'test-anyOf' => [
+                'anyOf' => [
+                    ['type' => 'number'],
+                    ['type' => 'integer'],
+                ]
+            ],
+            'test-oneOf' => [
+                'oneOf' => [
+                    ['type' => 'number'],
+                    ['type' => 'integer'],
+                ]
+            ],
+            'test-allOf' => [
+                'allOf' => [
+                    ['type' => 'number'],
+                    ['type' => 'integer'],
+                ]
+            ],
         ];
         $this->assertNotTrue($propertyBag->isEmpty());
         $this->assertSame(['type' => ['number', 'integer']], $propertyBag->get(8)?->toArray());
-        $this->assertSame(11, count($propertyBag->toArray()));
+        $this->assertSame(14, count($propertyBag->toArray()));
         $this->assertSame($expectedPropertyArray, $propertyBag->toArray());
         $this->assertSame(json_encode($expectedPropertyArray), json_encode($propertyBag), 'JsonSerializable');
         $this->assertSame(json_encode($expectedPropertyArray), (string)$propertyBag, 'Stringable');
         $this->assertEquals(
-            '{"test-string":{"type":"string","description":"test-description","pattern":"^[0-9]{1,15}$","minLength":1,"maxLength":10},"test-number":{"type":"number","minimum":1,"maximum":10,"exclusiveMinimum":1,"exclusiveMaximum":10,"multipleOf":10},"test-int":{"type":"integer","minimum":1,"maximum":10,"exclusiveMinimum":1,"exclusiveMaximum":10,"multipleOf":10},"test-reference":{"$ref":"#\/definitions\/test"},"test-bool":{"type":"boolean"},"test-null":{"type":"null"},"test-array":{"type":"array","items":[{"type":"number"},{"type":"integer"}],"minItems":1,"maxItems":100,"uniqueItems":true,"additionalItems":false},"test-enum":{"type":"string","enum":["ENUM1","ENUM2"],"default":"ENUM1"},"test-multiple-type":{"type":["number","integer"]},"test-const":{"const":"string"},"test-const-bool":{"const":true}}',
+            '{"test-string":{"type":"string","description":"test-description","pattern":"^[0-9]{1,15}$","minLength":1,"maxLength":10},"test-number":{"type":"number","minimum":1,"maximum":10,"exclusiveMinimum":1,"exclusiveMaximum":10,"multipleOf":10},"test-int":{"type":"integer","minimum":1,"maximum":10,"exclusiveMinimum":1,"exclusiveMaximum":10,"multipleOf":10},"test-reference":{"$ref":"#\/definitions\/test"},"test-bool":{"type":"boolean"},"test-null":{"type":"null"},"test-array":{"type":"array","items":[{"type":"number"},{"type":"integer"}],"minItems":1,"maxItems":100,"uniqueItems":true,"additionalItems":false},"test-enum":{"type":"string","enum":["ENUM1","ENUM2"],"default":"ENUM1"},"test-multiple-type":{"type":["number","integer"]},"test-const":{"const":"string"},"test-const-bool":{"const":true},"test-anyOf":{"anyOf":[{"type":"number"},{"type":"integer"}]},"test-oneOf":{"oneOf":[{"type":"number"},{"type":"integer"}]},"test-allOf":{"allOf":[{"type":"number"},{"type":"integer"}]}}',
             (string)$propertyBag
         );
     }
