@@ -37,10 +37,11 @@ class ConditionalPropertyBag extends PropertyBag
         string $description = '',
         ?Range $range = null,
         ?int $multipleOf = null,
+        ?string $pattern = null,
         bool $required = false
     ): ConditionalPropertyBag
     {
-        parent::addNumber($name, $description, $range, $multipleOf);
+        parent::addNumber($name, $description, $range, $multipleOf, $pattern);
         if ($required) {
             $this->addRequiredPropertyName($name);
         }
@@ -52,10 +53,11 @@ class ConditionalPropertyBag extends PropertyBag
         string $description = '',
         ?Range $range = null,
         ?int $multipleOf = null,
+        ?string $pattern = null,
         bool $required = false
     ): ConditionalPropertyBag
     {
-       parent::addInt($name, $description, $range, $multipleOf);
+       parent::addInt($name, $description, $range, $multipleOf, $pattern);
         if ($required) {
             $this->addRequiredPropertyName($name);
         }
