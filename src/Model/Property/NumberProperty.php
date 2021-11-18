@@ -18,7 +18,8 @@ class NumberProperty extends AbstractProperty
         string $name = '',
         string $description = '',
         protected ?Range $range = null,
-        protected ?int $multipleOf = null
+        protected ?int $multipleOf = null,
+        protected ?string $pattern = null
     )
     {
        parent::__construct($name, $description);
@@ -35,6 +36,7 @@ class NumberProperty extends AbstractProperty
             [
                 'type' => $this->getType(),
                 'description' => $this->description,
+                'pattern' => $this->pattern,
             ],
             fn($item) => !empty($item)
         );

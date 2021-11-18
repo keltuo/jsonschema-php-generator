@@ -1,47 +1,34 @@
 stages:
-    - prepare
-    - test
-    - deploy
+  - test
+  - deploy
 
-cache:
-  paths:
-    - vendor
-
-composer:
-  image: composer:1.10.15
-  stage: prepare
-  script:
-    - composer install --optimize-autoloader --prefer-dist --no-progress
+run-php-units:
   only:
-    - main
+    - tags
+  tags:
+    - docker
+  extends: .php-unit-tests
 
-
-test:php8:
-    stage: test
-    image: php:8-cli
-    dependencies:
-        - composer
-    before_script:
-        - apt-get update -yqq
-        - apt-get install -yqq git
-        # Install Xdebug
-        - pecl install xdebug
-        - docker-php-ext-enable xdebug
-    only:
-        - main
-    script:
-        - pwd
-        - php -dxdebug.mode=coverage vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
-    tags:
-        - docker
 
 deploy:
   stage: deploy
-  image: docker:stable
-  before_script:
-      - apk add --update curl && rm -rf /var/cache/apk/*
+  image: ubuntu:latest
   script:
-      - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=$PACKAGE_VERSION "https://$CI_SERVER_HOST/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
+    - apt-get update && apt-get install curl -y
+    - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=$CI_COMMIT_TAG "https://gitlab.adfinance.cz/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
   only:
-    - main
+    - tags
+
+.php-unit-tests:
+  stage: test
+  image: gitlab.adfinance.cz:4567/docker/php8:php80-cli-composer
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - vendor
+  before_script:
+    - pecl install xdebug && docker-php-ext-enable xdebug
+  script:
+    - composer install --optimize-autoloader --prefer-dist --no-progress
+    - php -dxdebug.mode=coverage -dshort_open_tag=0 vendor/bin/phpunit --coverage-text --verbose --configuration phpunit.xml
 
