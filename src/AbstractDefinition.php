@@ -6,6 +6,7 @@ namespace JsonSchemaPhpGenerator;
 use JetBrains\PhpStorm\Pure;
 use JsonSchemaPhpGenerator\Model\ConditionsBag;
 use JsonSchemaPhpGenerator\Model\DependenciesBag;
+use JsonSchemaPhpGenerator\Model\ItemBag;
 use JsonSchemaPhpGenerator\Model\PropertyBag;
 use ReflectionClass;
 use function implode;
@@ -24,13 +25,13 @@ abstract class AbstractDefinition implements GeneratorInterface
     /** @var bool */
     protected bool $additionalProperties = false;
     /** @var string */
-    protected string $definition;
+    protected string $definition = '';
     /** @var string */
-    protected string $properties;
+    protected string $properties = '';
     /** @var string */
-    protected string $required;
+    protected string $required = '';
     /** @var string */
-    protected string $enum;
+    protected string $enum = '';
     /** @var string[] */
     protected array $additionalDefinitions = [];
     /** @var DependenciesBag|null */
@@ -47,6 +48,8 @@ abstract class AbstractDefinition implements GeneratorInterface
     protected ?int $maxLength = null;
     /** @var array<int, bool|number|string> */
     protected array $enumValues = [];
+    /** @var ItemBag|null  */
+    protected ?ItemBag $itemBag = null;
 
     /**
      * Definition constructor.
@@ -96,6 +99,14 @@ abstract class AbstractDefinition implements GeneratorInterface
         return $this->allOf;
     }
 
+    public function getItemBag(): ItemBag
+    {
+        if(is_null($this->itemBag)) {
+            $this->itemBag = new ItemBag();
+        }
+        return $this->itemBag;
+    }
+
     protected function loadProperties(): void
     {
     }
@@ -130,8 +141,9 @@ abstract class AbstractDefinition implements GeneratorInterface
         $this->loadRequired();
         switch (static::TYPE) {
             case self::TYPE_OBJECT:
+            case self::TYPE_ARRAY:
                 $className = $this->getClassName();
-                $definition = $this->generateDefinition();
+                $definition = $this->generateDefinition(static::TYPE);
                 $this->addDefinitions(
                     '
                   "' . $className . '": {
@@ -201,10 +213,10 @@ abstract class AbstractDefinition implements GeneratorInterface
     protected function generateDefinition(string $type = self::TYPE_OBJECT, bool $additionalProperties = true): array
     {
         $className = $this->getClassName();
-        $definition = [
-            '"type": "' . $type . '"',
-            '"title": "' . $className . '"',
-        ];
+        $definition = [];
+        $definition[] = '"type": "' . $type . '"';
+        $definition[] = '"title": "' . $className . '"';
+
         if (!is_null($this->minLength)) {
             $definition[] = '"minLength": '.$this->minLength;
         }
@@ -243,6 +255,9 @@ abstract class AbstractDefinition implements GeneratorInterface
         }
         if (!$this->getAllOfBag()->isEmpty()) {
             $definition[] = '"allOf": ' . (string)json_encode($this->getAllOfBag()->toArray()) . '';
+        }
+        if (!$this->getItemBag()->isEmpty()) {
+                $definition[] = '"items": ' . (string)json_encode($this->getItemBag()->toArray()) . '';
         }
 
         return $definition;

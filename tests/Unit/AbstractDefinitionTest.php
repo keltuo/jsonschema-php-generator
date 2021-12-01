@@ -2,6 +2,7 @@
 
 namespace JsonSchemaPhpGenerator\Tests\Unit;
 
+use JsonSchemaPhpGenerator\Definition\ExampleArray;
 use JsonSchemaPhpGenerator\Definition\ExampleEnumValues as ExampleEnumValuesDefinition;
 use JsonSchemaPhpGenerator\Definition\ExampleMergeOldNewDefinitionProperties;
 use PHPUnit\Framework\TestCase;
@@ -45,6 +46,16 @@ class AbstractDefinitionTest extends TestCase
         $this->assertSame([
             1 => 'TWO'
         ], $definition->getEnumValues($exclude));
+    }
+
+    public function testGetArrayDefinition()
+    {
+        $definition = new ExampleArray();
+        $this->assertSame([
+            [
+                '$ref' => '#/definitions/Example'
+            ]
+        ], $definition->getItemBag()->toArray());
     }
 
 }

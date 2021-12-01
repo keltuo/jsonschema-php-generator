@@ -51,11 +51,11 @@ abstract class AbstractSchema implements GeneratorInterface
     }
 
     /**
-     * @param stdClass $data
+     * @param stdClass|array $data
      * @param  array<string|number|bool> $errors
      * @return bool
      */
-    public function validate(stdClass $data, array &$errors = []): bool
+    public function validate(stdClass|array $data, array &$errors = []): bool
     {
         $validator = new Validator();
         try {
