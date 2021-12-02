@@ -7,10 +7,10 @@ use \JsonSchemaPhpGenerator\AbstractDefinition;
 use JsonSchemaPhpGenerator\Model\Property\ReferenceProperty;
 
 /**
- * Class ExampleArray
+ * Class ExampleArrayItemsTypes
  * @package JsonSchemaPhpGenerator\Definition
  */
-class ExampleArray extends AbstractDefinition
+class ExampleArrayItemsTypes extends AbstractDefinition
 {
     const TYPE = self::TYPE_ARRAY;
     /** @var bool */
@@ -22,6 +22,13 @@ class ExampleArray extends AbstractDefinition
             ->add(
                 new ReferenceProperty(
                     'example',
+                    '',
+                    $this->findDefinitionAsRef(Example::class)
+                )
+            )
+            ->add(
+                new ReferenceProperty(
+                    'example2',
                     '',
                     $this->findDefinitionAsRef(Example::class)
                 )

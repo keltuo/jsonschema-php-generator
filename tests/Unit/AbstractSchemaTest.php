@@ -4,6 +4,7 @@ namespace JsonSchemaPhpGenerator\Tests\Unit;
 
 use JsonSchemaPhpGenerator\Definition\Example as ExampleDefinition;
 use JsonSchemaPhpGenerator\Definition\ExampleArray;
+use JsonSchemaPhpGenerator\Definition\ExampleArrayItemsTypes;
 use JsonSchemaPhpGenerator\Definition\ExampleMergeOldNewDefinitionProperties;
 use PHPUnit\Framework\TestCase;
 
@@ -413,11 +414,89 @@ class AbstractSchemaTest extends TestCase
               "type": "array",
               "title": "ExampleArray",
               "additionalProperties": false,
-              "items": [
+              "items":
                 {
                   "$ref": "#/definitions/Example"
                 }
+            }
+          }
+        }
+        '), $schema->decode());
+
+        $this->assertTrue($schema->validate(
+            json_decode('[
+                {
+                     "username": "john Doe",
+                     "password": "asdasd"
+                },
+                {
+                     "username": "john Doe 2",
+                     "password": "asdasd"
+                }
+            ]')
+        ));
+    }
+
+    public function testCanValidateSchemaAsArrayItemsTypesDefinitions()
+    {
+        $schema = $this->getMockForAbstractClass(
+            '\JsonSchemaPhpGenerator\AbstractSchema',
+        );
+        $schema->createSchemaFromDefinition(ExampleArrayItemsTypes::class);
+        $this->assertEquals(json_decode('
+        {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "$ref": "#/definitions/ExampleArrayItemsTypes",
+          "title": "",
+          "definitions": {
+            "NotEmptyString": {
+              "type": "string",
+              "title": "NotEmptyString",
+              "minLength": 1,
+              "additionalProperties": false
+            },
+            "Example": {
+              "type": "object",
+              "title": "Example",
+              "additionalProperties": false,
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "date-of-birth": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "note": {
+                  "$ref": "#/definitions/NotEmptyString"
+                },
+                "state": {
+                  "const": "United states"
+                },
+                "newsletter": {
+                  "const": true
+                }
+              },
+              "required": [
+                "username",
+                "password"
               ]
+            },
+            "ExampleArrayItemsTypes": {
+              "type": "array",
+              "title": "ExampleArrayItemsTypes",
+              "additionalProperties": false,
+              "items": [
+                {
+                  "$ref": "#/definitions/Example"
+                },
+                {
+                  "$ref": "#/definitions/Example"
+                }
+                ]
             }
           }
         }

@@ -56,6 +56,9 @@ class AbstractDefinitionTest extends TestCase
                 '$ref' => '#/definitions/Example'
             ]
         ], $definition->getItemBag()->toArray());
+
+        $definitionArr = ['"items": ' . (string)json_encode($definition->getItemBag()->toArray()) . ''];
+        $this->assertSame(['"items": [{"$ref":"#\/definitions\/Example"}]'], $definitionArr);
     }
 
 }

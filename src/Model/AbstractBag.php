@@ -51,6 +51,11 @@ abstract class AbstractBag implements \JsonSerializable, \Stringable
         return empty($this->items);
     }
 
+    public function count(): int
+    {
+        return count($this->items);
+    }
+
     public function __toString(): string
     {
         return (string)json_encode($this);

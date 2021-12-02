@@ -257,7 +257,11 @@ abstract class AbstractDefinition implements GeneratorInterface
             $definition[] = '"allOf": ' . (string)json_encode($this->getAllOfBag()->toArray()) . '';
         }
         if (!$this->getItemBag()->isEmpty()) {
-                $definition[] = '"items": ' . (string)json_encode($this->getItemBag()->toArray()) . '';
+            $items = $this->getItemBag()->toArray();
+            if(count($items) == 1) {
+                $items = current($items);
+            }
+            $definition[] = '"items": ' . (string)json_encode($items) . '';
         }
 
         return $definition;
