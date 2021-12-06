@@ -5,6 +5,7 @@ namespace JsonSchemaPhpGenerator\Model\Property\Format;
 
 /**
  * Class UriTemplate
+ *
  * @package JsonSchemaPhpGenerator\Model\Property\Format
  *
  * Built-in formats
@@ -16,7 +17,6 @@ namespace JsonSchemaPhpGenerator\Model\Property\Format;
  */
 class UriTemplate extends AbstractFormat
 {
-
     public function getType(): string
     {
         return 'uri-template';

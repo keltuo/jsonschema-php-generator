@@ -4,14 +4,15 @@ namespace JsonSchemaPhpGenerator;
 
 /**
  * Interface GeneratorInterface
+ *
  * @package JsonSchemaPhpGenerator
  */
 interface GeneratorInterface
 {
-    const TYPE_OBJECT = "object";
-    const TYPE_STRING = "string";
-    const TYPE_NUMBER = "number";
-    const TYPE_NULL = "null";
-    const TYPE_ARRAY = "array";
-    const TYPE_BOOLEAN = "boolean";
+    public const TYPE_OBJECT = "object";
+    public const TYPE_STRING = "string";
+    public const TYPE_NUMBER = "number";
+    public const TYPE_NULL = "null";
+    public const TYPE_ARRAY = "array";
+    public const TYPE_BOOLEAN = "boolean";
 }

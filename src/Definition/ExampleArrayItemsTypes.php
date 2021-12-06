@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace JsonSchemaPhpGenerator\Definition;
 
-use \JsonSchemaPhpGenerator\AbstractDefinition;
+use JsonSchemaPhpGenerator\AbstractDefinition;
 use JsonSchemaPhpGenerator\Model\Property\ReferenceProperty;
 
 /**
  * Class ExampleArrayItemsTypes
+ *
  * @package JsonSchemaPhpGenerator\Definition
  */
 class ExampleArrayItemsTypes extends AbstractDefinition
 {
-    const TYPE = self::TYPE_ARRAY;
-    /** @var bool */
+    public const TYPE = self::TYPE_ARRAY;
+
     protected bool $additionalProperties = false;
 
     protected function loadProperties(): void

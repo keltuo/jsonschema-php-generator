@@ -7,6 +7,7 @@ use JetBrains\PhpStorm\Pure;
 
 /**
  * Class AbstractBag
+ *
  * @package JsonSchemaPhpGenerator
  */
 abstract class AbstractBag implements \JsonSerializable, \Stringable
@@ -14,7 +15,7 @@ abstract class AbstractBag implements \JsonSerializable, \Stringable
     protected array $items = [];
     protected array $idMap = [];
 
-    public function get(int $index)
+    public function get(int $index): mixed
     {
         return $this->items[$index];
     }
@@ -22,6 +23,27 @@ abstract class AbstractBag implements \JsonSerializable, \Stringable
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    public function isEmpty(): bool
+    {
+        return empty($this->items);
+    }
+
+    public function count(): int
+    {
+        return \count($this->items);
+    }
+
+    public function toArray(): array
+    {
+        return $this->items;
+    }
+
+    #[Pure]
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
     }
 
     protected function insertEntry(ModelInterface $entry): bool
@@ -39,36 +61,11 @@ abstract class AbstractBag implements \JsonSerializable, \Stringable
 
     protected function checkEntry(string $property): bool
     {
-        // Allow only unique values
-        if (isset($this->idMap[$property])) {
-            return true;
-        }
-        return false;
-    }
-
-    public function isEmpty(): bool
-    {
-        return empty($this->items);
-    }
-
-    public function count(): int
-    {
-        return count($this->items);
+        return isset($this->idMap[$property]);
     }
 
     public function __toString(): string
     {
-        return (string)json_encode($this);
-    }
-
-    public function toArray(): array
-    {
-        return $this->items;
-    }
-
-    #[Pure]
-    public function jsonSerialize(): array
-    {
-        return $this->toArray();
+        return (string)\json_encode($this);
     }
 }

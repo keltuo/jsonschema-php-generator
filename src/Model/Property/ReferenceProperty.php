@@ -4,12 +4,11 @@ declare(strict_types=1);
 namespace JsonSchemaPhpGenerator\Model\Property;
 
 use JetBrains\PhpStorm\Pure;
-use JsonSchemaPhpGenerator\AbstractDefinition;
 
 /**
  * Class ReferenceProperty
- * @package JsonSchemaPhpGenerator\Model\Property
  *
+ * @package JsonSchemaPhpGenerator\Model\Property
  */
 class ReferenceProperty extends AbstractProperty
 {
@@ -20,23 +19,17 @@ class ReferenceProperty extends AbstractProperty
     )
     {
         parent::__construct($name, $description);
-
     }
+
     public function getType(): string
     {
         return 'ref';
     }
 
-    public function __toString(): string
-    {
-        return (string)json_encode($this);
-    }
-
-
     public function toArray(): array
     {
         return [
-            '$ref' => $this->identifier
+            '$ref' => $this->identifier,
         ];
     }
 
@@ -44,5 +37,10 @@ class ReferenceProperty extends AbstractProperty
     public function jsonSerialize(): array
     {
         return $this->toArray();
+    }
+
+    public function __toString(): string
+    {
+        return (string)\json_encode($this);
     }
 }

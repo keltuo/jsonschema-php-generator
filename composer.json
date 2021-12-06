@@ -26,7 +26,10 @@
         "ext-json": "*"
     },
     "require-dev": {
-      "phpstan/phpstan": "^0.12.49",
-      "phpunit/phpunit": "^9.5"
+      "phpstan/phpstan": "^1.2.0",
+      "phpunit/phpunit": "^9.5",
+      "slevomat/coding-standard": "^7.0",
+      "jetbrains/phpstorm-attributes": "^1.0",
+      "squizlabs/php_codesniffer": "*"
     }
 }

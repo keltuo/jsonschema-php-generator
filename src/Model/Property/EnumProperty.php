@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace JsonSchemaPhpGenerator\Model\Property;
 
-
 use JetBrains\PhpStorm\Pure;
 
 /**
  * Class EnumProperty
+ *
  * @package JsonSchemaPhpGenerator\Model\Property
  */
 class EnumProperty extends AbstractProperty
@@ -30,14 +30,14 @@ class EnumProperty extends AbstractProperty
 
     public function toArray(): array
     {
-        return array_filter(
+        return \array_filter(
             [
                 'type' => 'string',
                 $this->getType() => $this->items,
                 'description' => $this->description,
                 'default' => $this->default,
             ],
-            fn($item) => !empty($item)
+            static fn ($item) => !empty($item)
         );
     }
 }

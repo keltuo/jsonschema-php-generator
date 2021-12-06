@@ -5,6 +5,7 @@ namespace JsonSchemaPhpGenerator\Model\Property\Format;
 
 /**
  * Class RelativeJsonPointer
+ *
  * @package JsonSchemaPhpGenerator\Model\Property\Format
  *
  * Built-in formats
@@ -14,7 +15,6 @@ namespace JsonSchemaPhpGenerator\Model\Property\Format;
  */
 class RelativeJsonPointer extends AbstractFormat
 {
-
     public function getType(): string
     {
         return 'relative-json-pointer';

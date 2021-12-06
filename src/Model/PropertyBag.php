@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace JsonSchemaPhpGenerator\Model;
 
-
 use JsonSchemaPhpGenerator\Model\Property\AbstractProperty;
 use JsonSchemaPhpGenerator\Model\Property\AllOfProperty;
 use JsonSchemaPhpGenerator\Model\Property\AnyOfProperty;
@@ -26,6 +25,7 @@ use JsonSchemaPhpGenerator\Model\Property\StringProperty;
 
 /**
  * Class PropertyBag
+ *
  * @package JsonSchemaPhpGenerator\Model
  */
 class PropertyBag extends AbstractBag
@@ -33,8 +33,9 @@ class PropertyBag extends AbstractBag
     public function add(AbstractProperty $property): PropertyBag
     {
         if (empty($property->name)) {
-            $property->name = (string)(count($this->items)+1);
+            $property->name = (string)(\count($this->items)+1);
         }
+
         $this->insertEntry($property);
         return $this;
     }
@@ -44,7 +45,7 @@ class PropertyBag extends AbstractBag
         string $description = '',
         ?AbstractFormat $format = null,
         ?Length $length = null,
-        ?string $regex = null
+        ?string $regex = null,
     ): PropertyBag
     {
         $item = new StringProperty($name, $description, $format, $length, $regex);
@@ -57,7 +58,7 @@ class PropertyBag extends AbstractBag
         string $description = '',
         ?Range $range = null,
         ?int $multipleOf = null,
-        ?string $pattern = null
+        ?string $pattern = null,
     ): PropertyBag
     {
         $item = new NumberProperty($name, $description, $range, $multipleOf, $pattern);
@@ -70,7 +71,7 @@ class PropertyBag extends AbstractBag
         string $description = '',
         ?Range $range = null,
         ?int $multipleOf = null,
-        ?string $pattern = null
+        ?string $pattern = null,
     ): PropertyBag
     {
         $item = new IntegerProperty($name, $description, $range, $multipleOf, $pattern);
@@ -80,7 +81,7 @@ class PropertyBag extends AbstractBag
 
     public function addBool(
         string $name,
-        string $description = ''
+        string $description = '',
     ): PropertyBag
     {
         $item = new BooleanProperty($name, $description);
@@ -90,7 +91,7 @@ class PropertyBag extends AbstractBag
 
     public function addNull(
         string $name,
-        string $description = ''
+        string $description = '',
     ): PropertyBag
     {
         $item = new NullProperty($name, $description);
@@ -165,8 +166,8 @@ class PropertyBag extends AbstractBag
 
     public function addConst(
         string $name,
-        string|bool $value,
-        string $description = ''
+        string|bool|int|float $value,
+        string $description = '',
     ): PropertyBag
     {
         $item = new ConstProperty($name, $value, $description);
@@ -177,7 +178,7 @@ class PropertyBag extends AbstractBag
     public function addAnyOf(
         string $name,
         PropertyBag $propertyBag,
-        string $description = ''
+        string $description = '',
     ): PropertyBag
     {
         $item = new AnyOfProperty($name, $propertyBag, $description);
@@ -188,7 +189,7 @@ class PropertyBag extends AbstractBag
     public function addOneOf(
         string $name,
         PropertyBag $propertyBag,
-        string $description = ''
+        string $description = '',
     ): PropertyBag
     {
         $item = new OneOfProperty($name, $propertyBag, $description);
@@ -199,10 +200,10 @@ class PropertyBag extends AbstractBag
     public function addAllOf(
         string $name,
         PropertyBag $propertyBag,
-        string $description = ''
+        string $description = '',
     ): PropertyBag
     {
-        $item = new AllOfProperty($name,  $propertyBag, $description);
+        $item = new AllOfProperty($name, $propertyBag, $description);
         $this->add($item);
         return $this;
     }
@@ -210,9 +211,11 @@ class PropertyBag extends AbstractBag
     public function toArray(): array
     {
         $output = [];
+
         foreach ($this->items as $item) {
             $output[$item->getName()] = $item->toArray();
         }
+
         return $output;
     }
 }

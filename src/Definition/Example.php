@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace JsonSchemaPhpGenerator\Definition;
 
-use \JsonSchemaPhpGenerator\AbstractDefinition;
+use JsonSchemaPhpGenerator\AbstractDefinition;
 use JsonSchemaPhpGenerator\Model\Property\Format\Date;
 
 /**
  * Class Example
+ *
  * @package JsonSchemaPhpGenerator\Definition
  */
 class Example extends AbstractDefinition
 {
-    const TYPE = self::TYPE_OBJECT;
-    /** @var bool */
+    public const TYPE = self::TYPE_OBJECT;
+
     protected bool $additionalProperties = false;
 
     protected function loadProperties(): void

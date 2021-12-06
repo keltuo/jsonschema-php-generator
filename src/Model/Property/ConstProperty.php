@@ -8,6 +8,7 @@ use JetBrains\PhpStorm\Pure;
 
 /**
  * Class ConstProperty
+ *
  * @package JsonSchemaPhpGenerator\Model\Property
  * The const keyword is used to restrict a value to a single value.
  */
@@ -16,14 +17,14 @@ class ConstProperty extends AbstractProperty
     #[Pure]
     public function __construct(
         string $name,
-        protected string|bool $value,
+        protected string|bool|int|float $value,
         string $description = '',
     )
     {
         parent::__construct($name, $description);
     }
 
-    public function getValue(): string|bool
+    public function getValue(): string|bool|int|float
     {
         return $this->value;
     }
@@ -33,16 +34,11 @@ class ConstProperty extends AbstractProperty
         return 'const';
     }
 
-    public function __toString(): string
-    {
-        return (string)json_encode($this);
-    }
-
-    #[ArrayShape(['const' => "bool|string"])]
+    #[ArrayShape(['const' => "string|bool|int|float"])]
     public function toArray(): array
     {
         return [
-            'const' => $this->getValue()
+            'const' => $this->getValue(),
         ];
     }
 
@@ -50,5 +46,10 @@ class ConstProperty extends AbstractProperty
     public function jsonSerialize(): array
     {
         return $this->toArray();
+    }
+
+    public function __toString(): string
+    {
+        return (string)\json_encode($this);
     }
 }

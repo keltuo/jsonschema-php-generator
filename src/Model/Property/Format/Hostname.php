@@ -5,6 +5,7 @@ namespace JsonSchemaPhpGenerator\Model\Property\Format;
 
 /**
  * Class Hostname
+ *
  * @package JsonSchemaPhpGenerator\Model\Property\Format
  *
  * Built-in formats
@@ -14,7 +15,6 @@ namespace JsonSchemaPhpGenerator\Model\Property\Format;
  */
 class Hostname extends AbstractFormat
 {
-
     public function getType(): string
     {
         return 'hostname';

@@ -1,12 +1,16 @@
 <?php
+
+use JsonSchemaPhpGenerator\Schema\Example;
+
 require __DIR__ . '/../../vendor/autoload.php';
 
-$input = json_decode('{
+$input = (object)json_decode('{
                 "username": "Lukas"
             }');
 
-$schema = new \JsonSchemaPhpGenerator\Schema\Example();
+$schema = new Example();
 $errors = [];
+
 if ($schema->validate($input, $errors)) {
     echo "Validation OK" . PHP_EOL;
 } else {

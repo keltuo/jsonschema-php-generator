@@ -7,6 +7,7 @@ use JetBrains\PhpStorm\Pure;
 
 /**
  * Class Range
+ *
  * @package JsonSchemaPhpGenerator\Model\Property
  *
  * Ranges of numbers are specified using a combination of the minimum and maximum keywords,
@@ -21,11 +22,6 @@ class Range implements \JsonSerializable, \Stringable
      * x > $higherThenMin | exclusiveMinimum
      * x ≤ $maxOrEqualTo | maximum
      * x < $lowerThenMax | exclusiveMaximum
-     *
-     * @param int|null $minOrEqualTo
-     * @param int|null $maxOrEqualTo
-     * @param int|null $higherThenMin
-     * @param int|null $lowerThenMax
      */
     public function __construct(
         protected ?int $minOrEqualTo,
@@ -55,22 +51,16 @@ class Range implements \JsonSerializable, \Stringable
         return $this->lowerThenMax;
     }
 
-    public function __toString(): string
-    {
-        return (string)json_encode($this);
-    }
-
-
     public function toArray(): array
     {
-        return array_filter(
+        return \array_filter(
             [
                 'minimum' => $this->getMinOrEqualTo(),
                 'maximum' => $this->getMaxOrEqualTo(),
                 'exclusiveMinimum' => $this->getHigherThenMin(),
                 'exclusiveMaximum' => $this->getLowerThenMax(),
             ],
-            fn($item) => !is_null($item)
+            static fn ($item) => !\is_null($item)
         );
     }
 
@@ -78,5 +68,10 @@ class Range implements \JsonSerializable, \Stringable
     public function jsonSerialize(): array
     {
         return $this->toArray();
+    }
+
+    public function __toString(): string
+    {
+        return (string)\json_encode($this);
     }
 }

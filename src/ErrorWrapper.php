@@ -11,18 +11,20 @@ use ReflectionClass;
 
 /**
  * Class ErrorWrapper
+ *
  * @package JsonSchemaPhpGenerator
  */
 class ErrorWrapper implements ErrorWrapperInterface, Arrayable, ArrayAccess, Iterator, Countable
 {
+    /** @var class-string */
     protected string $errorModel = ErrorModel::class;
-    /** @var array|ErrorModel[] */
     protected array $errors = [];
     private int $position;
 
     /**
      * ErrorWrapper constructor.
-     * @param array $errors
+     *
+     * @throws \ReflectionException
      */
     public function __construct(array $errors = [])
     {
@@ -35,18 +37,21 @@ class ErrorWrapper implements ErrorWrapperInterface, Arrayable, ArrayAccess, Ite
         return $this->errors;
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function setErrors(array $errors): ErrorWrapperInterface
     {
         foreach ($errors as $error) {
-            if ($error instanceof $this->errorModel) {
-                $this->errors[] = $error;
-            } else {
-                $this->errors[] = $this->createError($error);
-            }
+            $this->errors[] = $error instanceof $this->errorModel ? $error : $this->createError($error);
         }
+
         return $this;
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function createError(array $data = []): object
     {
         return (new ReflectionClass($this->errorModel))->newInstanceArgs([$data]);
@@ -55,32 +60,46 @@ class ErrorWrapper implements ErrorWrapperInterface, Arrayable, ArrayAccess, Ite
     public function toArray(): array
     {
         $output = [];
+
         foreach ($this->errors as $error) {
             $output[] = $error->toArray();
         }
+
         return $output;
     }
 
-    public function offsetExists($offset): bool
+    /**
+     * @phpstan-ignore-next-line
+     */
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->errors[$offset]);
     }
 
-    public function offsetGet($offset): ?ErrorModel
+    /**
+     * @phpstan-ignore-next-line
+     */
+    public function offsetGet(mixed $offset): ?ErrorModel
     {
-        return isset($this->errors[$offset]) ? $this->errors[$offset] : null;
+        return $this->errors[$offset] ?? null;
     }
 
-    public function offsetSet($offset, $value): void
+    /**
+     * @phpstan-ignore-next-line
+     */
+    public function offsetSet(mixed $offset, mixed $value): void
     {
-        if (is_null($offset)) {
+        if (\is_null($offset)) {
             $this->errors[] = $value;
         } else {
             $this->errors[$offset] = $value;
         }
     }
 
-    public function offsetUnset($offset): void
+    /**
+     * @phpstan-ignore-next-line
+     */
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->errors[$offset]);
     }
@@ -113,6 +132,6 @@ class ErrorWrapper implements ErrorWrapperInterface, Arrayable, ArrayAccess, Ite
     #[Pure]
     public function count(): int
     {
-        return count($this->getErrors());
+        return \count($this->getErrors());
     }
 }

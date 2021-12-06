@@ -4,6 +4,7 @@ namespace JsonSchemaPhpGenerator;
 
 /**
  * Interface ErrorWrapperInterface
+ *
  * @package JsonSchemaPhpGenerator
  */
 interface ErrorWrapperInterface

@@ -310,7 +310,7 @@ class AbstractSchemaTest extends TestCase
                         'property' => 'AbstractSchema.php'
                     ]
                 ],
-                'context' => 102
+                'context' => 84
             ]
         ], $errors);
     }

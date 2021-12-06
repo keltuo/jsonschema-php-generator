@@ -5,8 +5,8 @@ namespace JsonSchemaPhpGenerator\Model\Property;
 
 /**
  * Class OneOfProperty
- * @package JsonSchemaPhpGenerator\Model\Property
  *
+ * @package JsonSchemaPhpGenerator\Model\Property
  */
 class OneOfProperty extends AnyOfProperty
 {

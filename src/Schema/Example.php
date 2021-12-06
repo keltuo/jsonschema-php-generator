@@ -3,19 +3,23 @@ declare(strict_types=1);
 
 namespace JsonSchemaPhpGenerator\Schema;
 
-use \JsonSchemaPhpGenerator\AbstractSchema;
+use JsonSchemaPhpGenerator\AbstractSchema;
+use JsonSchemaPhpGenerator\Definition\Example as Definition;
 
 /**
  * Class Example
+ *
  * @package JsonSchemaPhpGenerator\Schema
  */
 class Example extends AbstractSchema
 {
-    /** @var string */
-    public string $schemaTitle = 'Example schema';
+    protected string $schemaTitle = 'Example schema';
 
+    /**
+     * @throws \ReflectionException
+     */
     protected function loadSchema(): void
     {
-        $this->createSchemaFromDefinition(\JsonSchemaPhpGenerator\Definition\Example::class);
+        $this->createSchemaFromDefinition(Definition::class);
     }
 }

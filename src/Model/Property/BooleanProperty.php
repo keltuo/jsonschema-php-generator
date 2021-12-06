@@ -7,6 +7,7 @@ use JetBrains\PhpStorm\Pure;
 
 /**
  * Class BooleanProperty
+ *
  * @package JsonSchemaPhpGenerator\Model\Property
  * The boolean type matches only two special values: true and false.
  * Note that values that evaluate to true or false,
@@ -18,16 +19,11 @@ class BooleanProperty extends AbstractProperty
     {
         return 'boolean';
     }
-    public function __toString(): string
-    {
-        return (string)json_encode($this);
-    }
-
 
     public function toArray(): array
     {
         return [
-            'type' => $this->getType()
+            'type' => $this->getType(),
         ];
     }
 
@@ -35,5 +31,10 @@ class BooleanProperty extends AbstractProperty
     public function jsonSerialize(): array
     {
         return $this->toArray();
+    }
+
+    public function __toString(): string
+    {
+        return (string)\json_encode($this);
     }
 }

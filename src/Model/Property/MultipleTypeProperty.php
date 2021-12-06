@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace JsonSchemaPhpGenerator\Model\Property;
 
-
 use JetBrains\PhpStorm\Pure;
 use JsonSchemaPhpGenerator\Model\PropertyBag;
 
 /**
  * Class MultipleTypeProperty
+ *
  * @package JsonSchemaPhpGenerator\Model\Property
  */
 class MultipleTypeProperty extends AbstractProperty
 {
     protected PropertyBag $propertyBag;
+
     #[Pure]
     public function __construct(
         string $name,
@@ -21,6 +22,7 @@ class MultipleTypeProperty extends AbstractProperty
     )
     {
        parent::__construct($name, $description);
+
        $this->propertyBag = new PropertyBag();
     }
 
@@ -49,11 +51,10 @@ class MultipleTypeProperty extends AbstractProperty
     public function toArray(): array
     {
         return [
-            'type' => array_map(
-                fn(AbstractProperty $item):
-                    string => $item->getType(),
+            'type' => \array_map(
+                static fn (AbstractProperty $item): string => $item->getType(),
                     $this->getPropertyBag()->getItems()
-            )
+            ),
         ];
     }
 }

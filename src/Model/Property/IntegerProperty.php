@@ -5,6 +5,7 @@ namespace JsonSchemaPhpGenerator\Model\Property;
 
 /**
  * Class IntegerProperty
+ *
  * @package JsonSchemaPhpGenerator\Model\Property
  * The integer type is used for integral numbers.
  */

@@ -5,6 +5,7 @@ namespace JsonSchemaPhpGenerator\Model;
 
 /**
  * Class DependenciesBag
+ *
  * @package JsonSchemaPhpGenerator\Model
  */
 class DependenciesBag extends AbstractBag
@@ -18,26 +19,25 @@ class DependenciesBag extends AbstractBag
 
     public function addConditionalProperty(
         string $propertyName,
-        ConditionalPropertyBag $conditionalPropertyBag
+        ConditionalPropertyBag $conditionalPropertyBag,
     ): DependenciesBag
     {
         if (!$conditionalPropertyBag->isEmpty() && !$this->checkEntry($propertyName)) {
             $this->items[$propertyName] = $conditionalPropertyBag;
             $this->idMap[$propertyName] = $conditionalPropertyBag;
         }
+
         return $this;
     }
 
     public function toArray(): array
     {
         $output = [];
+
         foreach ($this->items as $key => $item) {
-            if (is_array($item)) {
-                $output[$key] = $item;
-            } else {
-                $output[$key] = $item->toArray();
-            }
+            $output[$key] = \is_array($item) ? $item : $item->toArray();
         }
+
         return $output;
     }
 }

@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace JsonSchemaPhpGenerator\Model\Property;
 
-
 use JetBrains\PhpStorm\Pure;
 use JsonSchemaPhpGenerator\Model\Property\Format\AbstractFormat;
 
 /**
  * Class StringProperty
+ *
  * @package JsonSchemaPhpGenerator\Model\Property
  */
 class StringProperty extends AbstractProperty
@@ -19,7 +19,7 @@ class StringProperty extends AbstractProperty
         string $description = '',
         protected ?AbstractFormat $format = null,
         protected ?Length $length = null,
-        protected ?string $regex = null
+        protected ?string $regex = null,
     )
     {
        parent::__construct($name, $description);
@@ -32,20 +32,21 @@ class StringProperty extends AbstractProperty
 
     public function toArray(): array
     {
-        $data = array_filter(
+        $data = \array_filter(
             [
                 'type' => $this->getType(),
                 'description' => $this->description,
                 'pattern' => $this->regex,
             ],
-            fn($item) => !empty($item)
+            static fn ($item) => !empty($item)
         );
 
-        if (!is_null($this->length)) {
-            $data = array_merge($data, $this->length->toArray());
+        if (!\is_null($this->length)) {
+            $data = \array_merge($data, $this->length->toArray());
         }
-        if (!is_null($this->format)) {
-            $data = array_merge($data, $this->format->toArray());
+
+        if (!\is_null($this->format)) {
+            $data = \array_merge($data, $this->format->toArray());
         }
 
         return $data;

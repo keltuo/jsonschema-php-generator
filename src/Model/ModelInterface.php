@@ -5,6 +5,7 @@ namespace JsonSchemaPhpGenerator\Model;
 
 /**
  * Interface ModelInterface
+ *
  * @package JsonSchemaPhpGenerator\Model
  */
 interface ModelInterface
