@@ -28,8 +28,8 @@ class Range implements \JsonSerializable, \Stringable
         protected ?int $maxOrEqualTo,
         protected ?int $higherThenMin,
         protected ?int $lowerThenMax,
-
-    ) {}
+    ) {
+    }
 
     public function getMinOrEqualTo(): ?int
     {

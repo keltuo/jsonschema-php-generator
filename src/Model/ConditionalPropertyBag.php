@@ -24,8 +24,7 @@ class ConditionalPropertyBag extends PropertyBag
         ?Length $length = null,
         ?string $regex = null,
         bool $required = false,
-    ): ConditionalPropertyBag
-    {
+    ): ConditionalPropertyBag {
         parent::addString($name, $description, $format, $length, $regex);
 
         if ($required) {
@@ -42,8 +41,7 @@ class ConditionalPropertyBag extends PropertyBag
         ?int $multipleOf = null,
         ?string $pattern = null,
         bool $required = false,
-    ): ConditionalPropertyBag
-    {
+    ): ConditionalPropertyBag {
         parent::addNumber($name, $description, $range, $multipleOf, $pattern);
 
         if ($required) {
@@ -60,9 +58,8 @@ class ConditionalPropertyBag extends PropertyBag
         ?int $multipleOf = null,
         ?string $pattern = null,
         bool $required = false,
-    ): ConditionalPropertyBag
-    {
-       parent::addInt($name, $description, $range, $multipleOf, $pattern);
+    ): ConditionalPropertyBag {
+        parent::addInt($name, $description, $range, $multipleOf, $pattern);
 
         if ($required) {
             $this->addRequiredPropertyName($name);
@@ -75,8 +72,7 @@ class ConditionalPropertyBag extends PropertyBag
         string $name,
         string $description = '',
         bool $required = false,
-    ): ConditionalPropertyBag
-    {
+    ): ConditionalPropertyBag {
         parent::addBool($name, $description);
 
         if ($required) {
@@ -90,8 +86,7 @@ class ConditionalPropertyBag extends PropertyBag
         string $name,
         string $description = '',
         bool $required = false,
-    ): ConditionalPropertyBag
-    {
+    ): ConditionalPropertyBag {
         parent::addNull($name, $description);
 
         if ($required) {
@@ -110,8 +105,7 @@ class ConditionalPropertyBag extends PropertyBag
         ?bool $uniqueItems = null,
         ?bool $additionalItems = null,
         bool $required = false,
-    ): ConditionalPropertyBag
-    {
+    ): ConditionalPropertyBag {
         parent::addArray($name, $itemBag, $description, $lengthItems, $default, $uniqueItems, $additionalItems);
 
         if ($required) {
@@ -126,8 +120,7 @@ class ConditionalPropertyBag extends PropertyBag
         string $identifier,
         string $description = '',
         bool $required = false,
-    ): ConditionalPropertyBag
-    {
+    ): ConditionalPropertyBag {
         parent::addReference($name, $identifier, $description);
 
         if ($required) {
@@ -143,8 +136,7 @@ class ConditionalPropertyBag extends PropertyBag
         string $default = '',
         string $description = '',
         bool $required = false,
-    ): ConditionalPropertyBag
-    {
+    ): ConditionalPropertyBag {
         parent::addEnum($name, $items, $default, $description);
 
         if ($required) {
@@ -159,8 +151,7 @@ class ConditionalPropertyBag extends PropertyBag
         PropertyBag $propertyBag,
         string $description = '',
         bool $required = false,
-    ): ConditionalPropertyBag
-    {
+    ): ConditionalPropertyBag {
         parent::addMultipleType($name, $propertyBag, $description);
 
         if ($required) {
@@ -175,8 +166,7 @@ class ConditionalPropertyBag extends PropertyBag
         string|bool|int|float $value,
         string $description = '',
         bool $required = false,
-    ): ConditionalPropertyBag
-    {
+    ): ConditionalPropertyBag {
         parent::addConst($name, $value, $description);
 
         if ($required) {

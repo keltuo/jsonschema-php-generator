@@ -62,7 +62,7 @@ abstract class AbstractDefinition implements GeneratorInterface
 
     public function getPropertyBag(): PropertyBag
     {
-        if(\is_null($this->propertyBag)) {
+        if (\is_null($this->propertyBag)) {
             $this->propertyBag = new PropertyBag();
         }
 
@@ -71,7 +71,7 @@ abstract class AbstractDefinition implements GeneratorInterface
 
     public function getDependenciesBag(): DependenciesBag
     {
-        if(\is_null($this->dependencies)) {
+        if (\is_null($this->dependencies)) {
             $this->dependencies = new DependenciesBag();
         }
 
@@ -80,7 +80,7 @@ abstract class AbstractDefinition implements GeneratorInterface
 
     public function getOneOfBag(): ConditionsBag
     {
-        if(\is_null($this->oneOf)) {
+        if (\is_null($this->oneOf)) {
             $this->oneOf = new ConditionsBag();
         }
 
@@ -89,7 +89,7 @@ abstract class AbstractDefinition implements GeneratorInterface
 
     public function getAnyOfBag(): ConditionsBag
     {
-        if(\is_null($this->anyOf)) {
+        if (\is_null($this->anyOf)) {
             $this->anyOf = new ConditionsBag();
         }
 
@@ -98,7 +98,7 @@ abstract class AbstractDefinition implements GeneratorInterface
 
     public function getAllOfBag(): ConditionsBag
     {
-        if(\is_null($this->allOf)) {
+        if (\is_null($this->allOf)) {
             $this->allOf = new ConditionsBag();
         }
 
@@ -107,7 +107,7 @@ abstract class AbstractDefinition implements GeneratorInterface
 
     public function getItemBag(): ItemBag
     {
-        if(\is_null($this->itemBag)) {
+        if (\is_null($this->itemBag)) {
             $this->itemBag = new ItemBag();
         }
 
@@ -276,7 +276,7 @@ abstract class AbstractDefinition implements GeneratorInterface
         if (!$this->getItemBag()->isEmpty()) {
             $items = $this->getItemBag()->toArray();
 
-            if(\count($items) === 1) {
+            if (\count($items) === 1) {
                 $items = \current($items);
             }
 

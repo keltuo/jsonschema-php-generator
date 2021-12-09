@@ -19,8 +19,7 @@ class ConstProperty extends AbstractProperty
         string $name,
         protected string|bool|int|float $value,
         string $description = '',
-    )
-    {
+    ) {
         parent::__construct($name, $description);
     }
 

@@ -20,9 +20,8 @@ class StringProperty extends AbstractProperty
         protected ?AbstractFormat $format = null,
         protected ?Length $length = null,
         protected ?string $regex = null,
-    )
-    {
-       parent::__construct($name, $description);
+    ) {
+        parent::__construct($name, $description);
     }
 
     public function getType(): string

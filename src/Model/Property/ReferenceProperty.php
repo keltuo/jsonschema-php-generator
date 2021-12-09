@@ -16,8 +16,7 @@ class ReferenceProperty extends AbstractProperty
         string $name,
         string $description = '',
         protected string $identifier = '',
-    )
-    {
+    ) {
         parent::__construct($name, $description);
     }
 

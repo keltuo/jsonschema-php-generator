@@ -19,11 +19,10 @@ class MultipleTypeProperty extends AbstractProperty
     public function __construct(
         string $name,
         string $description = '',
-    )
-    {
-       parent::__construct($name, $description);
+    ) {
+        parent::__construct($name, $description);
 
-       $this->propertyBag = new PropertyBag();
+        $this->propertyBag = new PropertyBag();
     }
 
     public function getType(): string
@@ -53,7 +52,7 @@ class MultipleTypeProperty extends AbstractProperty
         return [
             'type' => \array_map(
                 static fn (AbstractProperty $item): string => $item->getType(),
-                    $this->getPropertyBag()->getItems()
+                $this->getPropertyBag()->getItems()
             ),
         ];
     }

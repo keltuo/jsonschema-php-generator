@@ -18,9 +18,8 @@ class EnumProperty extends AbstractProperty
         protected array $items,
         protected string $default = '',
         string $description = '',
-    )
-    {
-       parent::__construct($name, $description);
+    ) {
+        parent::__construct($name, $description);
     }
 
     public function getType(): string

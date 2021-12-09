@@ -24,8 +24,7 @@ class ArrayProperty extends AbstractProperty
         protected string $default = '',
         protected ?bool $uniqueItems = null,
         protected ?bool $additionalItems = null,
-    )
-    {
+    ) {
         $this->itemBag = new ItemBag();
 
         parent::__construct($name, $description);
@@ -68,7 +67,7 @@ class ArrayProperty extends AbstractProperty
             $data = \array_merge($data, ['items' => $this->getItemBag()->toArray()]);
         }
 
-        if(!\is_null($this->lengthItems)) {
+        if (!\is_null($this->lengthItems)) {
             $data = \array_merge($data, $this->lengthItems->toArray());
         }
 

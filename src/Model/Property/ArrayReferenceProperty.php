@@ -21,8 +21,7 @@ class ArrayReferenceProperty extends ArrayProperty
         string $default = '',
         ?bool $uniqueItems = null,
         ?bool $additionalItems = null,
-    )
-    {
+    ) {
         parent::__construct(
             $name,
             $description,

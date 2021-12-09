@@ -71,7 +71,7 @@ abstract class AbstractSchema implements GeneratorInterface
         $errors = \array_unique(\array_merge(
             $errors,
             $this->errorWrapper->setErrors($validateErrors)->toArray()
-        ),\SORT_REGULAR);
+        ), \SORT_REGULAR);
 
         return $validator->isValid();
     }

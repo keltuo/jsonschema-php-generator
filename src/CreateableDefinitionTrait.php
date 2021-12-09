@@ -21,8 +21,7 @@ trait CreateableDefinitionTrait
     {
         $object = \is_null($object) ? $this->createClassFromString($definitionClassString) : $object;
 
-        if (
-            \is_a($object, AbstractDefinition::class)
+        if (\is_a($object, AbstractDefinition::class)
             && \method_exists($this, 'addDefinitions')
         ) {
             $this->addDefinitions($object->getDefinition());

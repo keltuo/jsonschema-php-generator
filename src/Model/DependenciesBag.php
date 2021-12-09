@@ -20,8 +20,7 @@ class DependenciesBag extends AbstractBag
     public function addConditionalProperty(
         string $propertyName,
         ConditionalPropertyBag $conditionalPropertyBag,
-    ): DependenciesBag
-    {
+    ): DependenciesBag {
         if (!$conditionalPropertyBag->isEmpty() && !$this->checkEntry($propertyName)) {
             $this->items[$propertyName] = $conditionalPropertyBag;
             $this->idMap[$propertyName] = $conditionalPropertyBag;

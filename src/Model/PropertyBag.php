@@ -46,8 +46,7 @@ class PropertyBag extends AbstractBag
         ?AbstractFormat $format = null,
         ?Length $length = null,
         ?string $regex = null,
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new StringProperty($name, $description, $format, $length, $regex);
         $this->add($item);
         return $this;
@@ -59,8 +58,7 @@ class PropertyBag extends AbstractBag
         ?Range $range = null,
         ?int $multipleOf = null,
         ?string $pattern = null,
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new NumberProperty($name, $description, $range, $multipleOf, $pattern);
         $this->add($item);
         return $this;
@@ -72,8 +70,7 @@ class PropertyBag extends AbstractBag
         ?Range $range = null,
         ?int $multipleOf = null,
         ?string $pattern = null,
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new IntegerProperty($name, $description, $range, $multipleOf, $pattern);
         $this->add($item);
         return $this;
@@ -82,8 +79,7 @@ class PropertyBag extends AbstractBag
     public function addBool(
         string $name,
         string $description = '',
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new BooleanProperty($name, $description);
         $this->add($item);
         return $this;
@@ -92,8 +88,7 @@ class PropertyBag extends AbstractBag
     public function addNull(
         string $name,
         string $description = '',
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new NullProperty($name, $description);
         $this->add($item);
         return $this;
@@ -107,8 +102,7 @@ class PropertyBag extends AbstractBag
         string $default = '',
         ?bool $uniqueItems = null,
         ?bool $additionalItems = null,
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new ArrayProperty(
             $name,
             $description,
@@ -126,8 +120,7 @@ class PropertyBag extends AbstractBag
         string $name,
         string $identifier,
         string $description = '',
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new ReferenceProperty($name, $description, $identifier);
         $this->add($item);
         return $this;
@@ -137,8 +130,7 @@ class PropertyBag extends AbstractBag
         string $name,
         string $identifier,
         string $description = '',
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new ArrayReferenceProperty($name, $description, $identifier);
         $this->add($item);
         return $this;
@@ -149,8 +141,7 @@ class PropertyBag extends AbstractBag
         array $items,
         string $default = '',
         string $description = '',
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new EnumProperty($name, $items, $default, $description);
         $this->add($item);
         return $this;
@@ -158,7 +149,7 @@ class PropertyBag extends AbstractBag
 
     public function addMultipleType(string $name, PropertyBag $propertyBag, string $description = ''): PropertyBag
     {
-        $item = new MultipleTypeProperty( $name, $description);
+        $item = new MultipleTypeProperty($name, $description);
         $item->setPropertyBag($propertyBag);
         $this->add($item);
         return $this;
@@ -168,8 +159,7 @@ class PropertyBag extends AbstractBag
         string $name,
         string|bool|int|float $value,
         string $description = '',
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new ConstProperty($name, $value, $description);
         $this->add($item);
         return $this;
@@ -179,8 +169,7 @@ class PropertyBag extends AbstractBag
         string $name,
         PropertyBag $propertyBag,
         string $description = '',
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new AnyOfProperty($name, $propertyBag, $description);
         $this->add($item);
         return $this;
@@ -190,8 +179,7 @@ class PropertyBag extends AbstractBag
         string $name,
         PropertyBag $propertyBag,
         string $description = '',
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new OneOfProperty($name, $propertyBag, $description);
         $this->add($item);
         return $this;
@@ -201,8 +189,7 @@ class PropertyBag extends AbstractBag
         string $name,
         PropertyBag $propertyBag,
         string $description = '',
-    ): PropertyBag
-    {
+    ): PropertyBag {
         $item = new AllOfProperty($name, $propertyBag, $description);
         $this->add($item);
         return $this;

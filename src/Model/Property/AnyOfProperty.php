@@ -18,8 +18,7 @@ class AnyOfProperty extends AbstractProperty
         string $name,
         protected PropertyBag $propertyBag,
         string $description = '',
-    )
-    {
+    ) {
         parent::__construct($name, $description);
     }
 

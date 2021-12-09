@@ -11,7 +11,7 @@ use JsonSchemaPhpGenerator\Model\ModelInterface;
  *
  * @package JsonSchemaPhpGenerator\Model\Property
  */
-abstract class AbstractProperty implements ModelInterface,\JsonSerializable, \Stringable
+abstract class AbstractProperty implements ModelInterface, \JsonSerializable, \Stringable
 {
     abstract public function getType(): string;
 
@@ -20,7 +20,8 @@ abstract class AbstractProperty implements ModelInterface,\JsonSerializable, \St
     public function __construct(
         public string $name,
         public string $description = '',
-    ){}
+    ) {
+    }
 
     #[Pure]
     public function getIdentifier(): string

@@ -25,7 +25,7 @@ class ErrorModel implements Arrayable, JsonSerializable, Stringable
         }
 
         foreach (self::toArray() as $key => $value) {
-            if(\array_key_exists($key, $data)) {
+            if (\array_key_exists($key, $data)) {
                 $this->{$key} = $data[$key];
             }
         }

@@ -20,9 +20,8 @@ class NumberProperty extends AbstractProperty
         protected ?Range $range = null,
         protected ?int $multipleOf = null,
         protected ?string $pattern = null,
-    )
-    {
-       parent::__construct($name, $description);
+    ) {
+        parent::__construct($name, $description);
     }
 
     public function getType(): string
