@@ -49,6 +49,9 @@ class AbstractSchemaTest extends TestCase
                     },
                     "newsletter": {
                         "const": true
+                    },
+                    "enum_values": {
+                        "enum": ["red", "amber", "green", null, 42]
                     }
                  },
                  "required":[
@@ -403,6 +406,9 @@ class AbstractSchemaTest extends TestCase
                 },
                 "newsletter": {
                   "const": true
+                },
+                "enum_values": {
+                    "enum": ["red", "amber", "green", null, 42]
                 }
               },
               "required": [
@@ -422,7 +428,6 @@ class AbstractSchemaTest extends TestCase
           }
         }
         '), $schema->decode());
-
         $this->assertTrue($schema->validate(
             json_decode('[
                 {
@@ -431,7 +436,8 @@ class AbstractSchemaTest extends TestCase
                 },
                 {
                      "username": "john Doe 2",
-                     "password": "asdasd"
+                     "password": "asdasd",
+                     "enum_values": 42
                 }
             ]')
         ));
@@ -478,6 +484,9 @@ class AbstractSchemaTest extends TestCase
                 },
                 "newsletter": {
                   "const": true
+                },
+                "enum_values": {
+                    "enum": ["red", "amber", "green", null, 42]
                 }
               },
               "required": [

@@ -26,7 +26,8 @@ class Example extends AbstractDefinition
             ->addString('date-of-birth', '', new Date())
             ->addReference('note', $this->findDefinitionAsRef(NotEmptyString::class))
             ->addConst('state', 'United states')
-            ->addConst('newsletter', true);
+            ->addConst('newsletter', true)
+            ->addEnum('enum_values', ['red', 'amber', 'green', null, 42]);
 
         // Example2: old definition properties
         $this->properties = '

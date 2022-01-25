@@ -15,9 +15,9 @@
         }
     },
     "autoload-dev": {
-      "psr-4": {
-        "JsonSchemaPhpGenerator\\Tests\\": "tests/"
-      }
+        "psr-4": {
+          "JsonSchemaPhpGenerator\\Tests\\": "tests/"
+        }
     },
     "minimum-stability": "stable",
     "require": {
