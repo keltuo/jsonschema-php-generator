@@ -12,6 +12,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ErrorWrapperTest extends TestCase
 {
+    /**
+     * @throws \ReflectionException
+     */
     public function testErrors()
     {
         $wrapper = new ErrorWrapper([

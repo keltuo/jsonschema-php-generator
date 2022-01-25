@@ -31,7 +31,6 @@ class EnumProperty extends AbstractProperty
     {
         return \array_filter(
             [
-                'type' => 'string',
                 $this->getType() => $this->items,
                 'description' => $this->description,
                 'default' => $this->default,
